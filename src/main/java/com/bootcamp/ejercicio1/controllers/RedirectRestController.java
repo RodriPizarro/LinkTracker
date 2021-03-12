@@ -14,8 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class RedirectRestController {
-    @Autowired
-    private IRedirectService redirectService;
+
+    private final IRedirectService redirectService;
+
+    public RedirectRestController(IRedirectService redirectService) {
+        this.redirectService = redirectService;
+    }
 
     @PostMapping("/create")
     public int create(@RequestBody LinkRequestDTO req) throws BadLinkRequestException {
@@ -34,9 +38,9 @@ public class RedirectRestController {
     }
 
     @GetMapping("/metrics/{linkId}")
-    public int metrics(@PathVariable String linkId, @RequestParam(required = false) String pass) throws LinkNotFoundException, InvalidPasswordException  {
+    public int metrics(@PathVariable String linkId, @RequestParam(required = false) String password) throws LinkNotFoundException, InvalidPasswordException  {
         int id = Integer.parseInt(linkId);
-        return redirectService.getMetrics(id, pass);
+        return redirectService.getMetrics(id, password);
     }
 
     @PostMapping("/invalidate/{linkId}")

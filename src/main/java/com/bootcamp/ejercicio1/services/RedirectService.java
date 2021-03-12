@@ -11,7 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RedirectService implements IRedirectService {
     @Autowired
-    IURLRepository repository;
+    private final IURLRepository repository;
+
+    public RedirectService(IURLRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public LinkDTO createLink(String url, String pass) {
